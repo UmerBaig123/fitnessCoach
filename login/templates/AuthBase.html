@@ -1,0 +1,40 @@
+<html lang="en">
+  <head>
+    <title>Login</title>
+    {%load static%}
+  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}" />
+  <script>
+    const togglePassword = () => {
+      const password = document.getElementById("passwordInp");
+      const eye = document.querySelector(".eye");
+      if (password.type === "password") {
+        password.type = "text";
+        eye.src = "{% static 'visOn.png' %}";
+      } else {
+        password.type = "password";
+        eye.src = "{% static 'visOff.png' %}";
+      }
+    };
+    const toggleCPassword = () => {
+      const password = document.getElementById("passwordCInp");
+      const eye = document.querySelector("#ceye");
+      if (password.type === "password") {
+        password.type = "text";
+        eye.src = "{% static 'visOn.png' %}";
+      } else {
+        password.type = "password";
+        eye.src = "{% static 'visOff.png' %}";
+      }
+    };
+  </script>
+  <body>
+    <div class="login">{% block content %}{% endblock %}</div>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+{% extends "AuthBase.html" %} {% load static %} {% block content %}
+<style>
+  .inputBox {
+    margin-top: 15px;
+  }
+</style>
+<form action="" method="POST" class="form">
+  {% csrf_token %}
+  <img class="logo" src="{%static 'logo.png'%}" />
+  <div class="title" style="margin-bottom: 0px">SIGNUP</div>
+  <div class="inputbox">
+    <input required="required" type="text" name="username" autocomplete="off" />
+    <span>Username</span>
+    <i></i>
+  </div>
+  <div class="inputbox">
+    <input required="required" type="text" name="email" autocomplete="off" />
+    <span>Email Address</span>
+    <i></i>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      margin-left: 42px;
+    "
+  >
+    <div class="inputbox">
+      <input
+        required="required"
+        type="password"
+        id="passwordInp"
+        name="password"
+        autocomplete="off"
+      />
+      <span>Password</span>
+      <i></i>
+    </div>
+    <img
+      onClick="togglePassword()"
+      style="margin: 10px"
+      src="{% static 'visOff.png' %}"
+      class="eye"
+      height="18px"
+    />
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      margin-left: 42px;
+    "
+  >
+    <div class="inputbox">
+      <input
+        required="required"
+        type="password"
+        id="passwordCInp"
+        name="passwordConf"
+        autocomplete="off"
+      />
+      <span>Confirm Password</span>
+      <i></i>
+    </div>
+    <img
+      onClick="toggleCPassword()"
+      style="margin: 10px"
+      src="{% static 'visOff.png' %}"
+      class="eye"
+      id="ceye"
+      height="18px"
+    />
+  </div>
+  <button type="submit" class="btn" value="submit" style="margin-top: 10px">
+    Next
+  </button>
+
+  <a
+    href="{% url 'login_user'%}"
+    style="
+      color: #fff;
+      text-decoration: none;
+      position: absolute;
+      bottom: 10px;
+      font-size: 10px;
+      font-family: 'Varela Round', sans-serif;
+      font-weight: 600;
+    "
+    >Already have an account? Login</a
+  >
+</form>
+{% endblock %}

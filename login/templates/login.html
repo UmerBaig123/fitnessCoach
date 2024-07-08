@@ -1,0 +1,54 @@
+{% extends "AuthBase.html" %} {% load static %} {% block content %}
+<form action="{% url 'login_user' %}" method="POST" class="form">
+  {% csrf_token %}
+  <img class="logo" src="{%static 'logo.png'%}" />
+  <div class="title">LOGIN</div>
+  <div class="inputbox">
+    <input required="required" type="text" name="username" autocomplete="off" />
+    <span>Username</span>
+    <i></i>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      margin-left: 42px;
+    "
+  >
+    <div class="inputbox">
+      <input
+        required="required"
+        type="password"
+        id="passwordInp"
+        name="password"
+        autocomplete="off"
+      />
+      <span>Password</span>
+      <i></i>
+    </div>
+    <img
+      onClick="togglePassword()"
+      style="margin: 10px"
+      src="{% static 'visOff.png' %}"
+      class="eye"
+      height="18px"
+    />
+  </div>
+  <button type="submit" class="btn" value="submit">Login</button>
+
+  <a
+    href="{% url 'signup_user'%}"
+    style="
+      color: #fff;
+      text-decoration: none;
+      position: absolute;
+      bottom: 10px;
+      font-size: 10px;
+      font-family: 'Varela Round', sans-serif;
+      font-weight: 600;
+    "
+    >Create an account</a
+  >
+</form>
+{% endblock %}

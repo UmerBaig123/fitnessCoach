@@ -1,0 +1,78 @@
+body {
+  font-family: Varela Round, sans-serif;
+  background-color: #dddddd;
+  margin: 0;
+  padding: 0;
+}
+.topbar {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+  padding: 10px 20px;
+  background-color: #3a9428;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: medium;
+  gap: 40px;
+}
+.btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* margin: 1em; */
+}
+
+.btn span {
+  letter-spacing: 4px;
+  font-size: 11px;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+.hover-underline-animation {
+  position: relative;
+  color: rgb(255, 255, 255);
+  /* padding-bottom: 20px; */
+}
+
+.hover-underline-animation::before {
+  content: "";
+  position: absolute;
+  width: 96%;
+  transform: scaleX(0);
+  height: 2px;
+  top: 15px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.btn:hover .hover-underline-animation:before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.profile {
+  background-color: #d8d8d8;
+  border-radius: 50%;
+}
+.profileCont {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  gap: 25px;
+  font-size: 30px;
+  color: #000000;
+  user-select: none;
+}
+a {
+  text-decoration: none;
+  color: white;
+}

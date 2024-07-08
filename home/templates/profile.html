@@ -1,0 +1,70 @@
+{% extends "home_base.html" %}
+
+<!-- prettier-ignore -->
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'profile.css' %}" />
+<div class="paralell">
+  <div class="container">
+    <div class="name">{{user.username}}</div>
+    <div class="paralell">
+      <div class="data gap">
+        <span class="label">Gender </span> {{stats.gender}}
+      </div>
+      <div class="data"><span class="label">Age </span> {{stats.age}}</div>
+    </div>
+    <div class="paralell gap">
+      <div class="data">
+        <span class="label">Weight </span> {{stats.weight}} kg
+      </div>
+      <div class="data">
+        <span class="label">Height </span> {{stats.height}} cm
+      </div>
+    </div>
+    <div class="paralell gap">
+      <div class="data">
+        <span class="label">Activity </span> {{stats.activity}}
+      </div>
+      <div class="data"><span class="label">Goal </span> {{stats.goal}}</div>
+    </div>
+  </div>
+  <div class="imageContainer">
+    <img
+      src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg"
+      alt=""
+      class="profileImage"
+    />
+    <a href="{% url 'user_stats_home' %}" class="btn">change personal data</a>
+  </div>
+</div>
+<div class="stats">
+  <div class="title">Your Stats</div>
+  <div class="stat-container">
+    <div class="card">
+      <div class="card-title">Body Mass Index</div>
+      <div class="card-bar"></div>
+      <div class="card-val">{{stats.BMI}}</div>
+    </div>
+    <div class="card">
+      <div class="card-title">calories requirement</div>
+      <div class="card-bar"></div>
+      <div class="card-val">{{stats.CaloriesIntake}} kcal</div>
+    </div>
+    <div class="card">
+      <div class="card-title">protein requirement</div>
+      <div class="card-bar"></div>
+      <div class="card-val">{{stats.ProteinIntake}} g</div>
+    </div>
+    <div class="card">
+      <div class="card-title">carbs requirement</div>
+      <div class="card-bar"></div>
+      <div class="card-val">{{stats.CarbsIntake}} g</div>
+    </div>
+    <div class="card">
+      <div class="card-title">fat requirement</div>
+      <div class="card-bar"></div>
+      <div class="card-val">{{stats.FatIntake}} g</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,326 @@
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Stats</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Stats.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    {% if messages %} {% for message in messages %}
+    <div class="error">{{ message }}</div>
+    {% endfor %} {% endif %}
+    <div class="top">
+      <div class="wave"></div>
+      <div class="title">fill in data</div>
+    </div>
+    <form class="container" method="post" action="{% url 'user_stats' %}">
+      {% csrf_token %}
+      <div class="paralell">
+        <input
+          type="text"
+          name="weightUnit"
+          id="weightUnit"
+          value="KGs"
+          hidden
+        /><input
+          hidden
+          type="text"
+          value="cm"
+          name="heightUnit"
+          id="heightUnit"
+        />
+        <div class="input-group">
+          <label onclick="labelClick('gender')" class="label">Gender</label>
+          <div class="dropdown">
+            <input
+              class="ddInp"
+              id="genderDD"
+              name="gender"
+              value="{{stats.gender}}"
+              style="width: 120px"
+            />
+            <div class="dropdown-content" id="genderCont" style="width: 116px">
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('genderDD','male')"
+              >
+                Male
+              </div>
+              <div
+                id="bottom"
+                class="options"
+                onclick="selectThis('genderDD','female')"
+              >
+                Female
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+
+        <div class="input-group">
+          <label onclick="labelClick('activity')" class="label">Activity</label>
+          <div class="dropdown">
+            <input
+              value="{{stats.activity}}"
+              class="ddInp"
+              name="activity"
+              id="activityDD"
+            />
+            <div class="dropdown-content" id="genderCont">
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('activityDD','Very Low')"
+              >
+                Very Low
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('activityDD','Low')"
+              >
+                Low
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('activityDD','Moderate')"
+              >
+                Moderate
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('activityDD','High')"
+              >
+                High
+              </div>
+              <div
+                id="bottom"
+                class="options"
+                onclick="selectThis('activityDD','Very High')"
+              >
+                Very High
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div class="paralell">
+        <div class="input-group">
+          <label onclick="labelClick('age')" class="label"
+            >Age &ensp;&ensp;&ensp;</label
+          >
+          <input
+            value="{{stats.age}}"
+            autocomplete="off"
+            type="number"
+            name="age"
+            id="age"
+            class="input"
+          />
+          <div></div>
+        </div>
+        <div class="input-group">
+          <label onclick="labelClick('goal')" class="label"
+            >Goal&ensp;&ensp;</label
+          >
+          <div class="dropdown">
+            <input
+              value="{{stats.goal}}"
+              class="ddInp"
+              name="goal"
+              id="goalDD"
+            />
+            <div class="dropdown-content">
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('goalDD','Lose Weight Fast')"
+              >
+                Lose Weight Fast
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('goalDD','Lose Weight Slowly')"
+              >
+                Lose Weight Slowly
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('goalDD','Maintain')"
+              >
+                Maintain
+              </div>
+              <div
+                id="middle"
+                class="options"
+                onclick="selectThis('goalDD','Gain Weight Slowly')"
+              >
+                Gain Weight Slowly
+              </div>
+              <div
+                id="bottom"
+                class="options"
+                onclick="selectThis('goalDD','Gain Weight Fast')"
+              >
+                Gain Weight Fast
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div class="paralell" style="justify-content: center; gap: 10px">
+        <div class="input-group">
+          <label onclick="labelClick('height')" class="label"
+            >Height&ensp;</label
+          >
+          <div style="display: flex">
+            <input
+              autocomplete="off"
+              type="number"
+              value="{{stats.height}}"
+              name="height"
+              id="height"
+              class="input"
+            />
+            <input
+              autocomplete="off"
+              type="number"
+              id="feet"
+              placeholder="ft"
+              class="input"
+              style="width: 50px"
+              onchange="setHeight()"
+              style="width: 60px"
+              hidden
+            />
+            <input
+              autocomplete="off"
+              type="number"
+              id="inches"
+              placeholder="in"
+              class="input"
+              style="width: 60px; margin-left: 10px"
+              onchange="setHeight()"
+              hidden
+            />
+          </div>
+          <div></div>
+        </div>
+
+        <div class="roll-container" onclick="switchHeightUnit()">
+          <div class="roll-box height-units" style="padding-left: 7px">cm</div>
+          <div class="roll-box height-units">ft/in</div>
+        </div>
+        <div class="input-group" style="margin-left: 80px">
+          <label onclick="labelClick('weight')" class="label">Weight</label>
+          <input
+            autocomplete="off"
+            type="number"
+            value="{{stats.weight}}"
+            name="weight"
+            id="weight"
+            class="input"
+          />
+          <div></div>
+        </div>
+        <div class="roll-container" onclick="switchWeightUnit()">
+          <div class="roll-box weight-units">KGs</div>
+          <div class="roll-box weight-units">LBs</div>
+        </div>
+      </div>
+      <div class="submit">
+        <button class="btn" type="submit" value="submit">Submit</button>
+      </div>
+    </form>
+    <script>
+      console.log("{{stats.gender}}");
+      const labelClick = (idName) => {
+        document.getElementById(idName).focus();
+      };
+      //Mista White, function ain't running here yo
+      const selectThis = (inputId, value) => {
+        document.getElementById(inputId).value = value;
+      };
+      const switchWeightUnit = () => {
+        const weightUnit = document.getElementById("weightUnit");
+        if (weightUnit.value === "KGs") {
+          weightUnit.value = "LBs";
+
+          document.getElementsByClassName("weight-units")[0].style.transform =
+            "translateY(-32px)";
+          document.getElementsByClassName("weight-units")[1].style.transform =
+            "translateY(-32px)";
+          let lb = document.getElementById("weight").value * 2.20462;
+          if (lb > 0) {
+            document.getElementById("weight").value = Math.round(lb);
+          }
+        } else {
+          weightUnit.value = "KGs";
+          document.getElementsByClassName("weight-units")[0].style.transform =
+            "translateY(0px)";
+          document.getElementsByClassName("weight-units")[1].style.transform =
+            "translateY(0px)";
+          let kg = document.getElementById("weight").value / 2.20462;
+          if (kg > 0) {
+            document.getElementById("weight").value = Math.round(kg);
+          }
+        }
+        console.log(weightUnit.value);
+      };
+      const switchHeightUnit = () => {
+        const heightUnit = document.getElementById("heightUnit");
+        if (heightUnit.value === "cm") {
+          heightUnit.value = "ft/in";
+          document.getElementsByClassName("height-units")[0].style.transform =
+            "translateY(-32px)";
+          document.getElementsByClassName("height-units")[1].style.transform =
+            "translateY(-32px)";
+          document.getElementById("height").hidden = true;
+          let feet = document.getElementById("height").value / 30.48;
+          let inches = (feet - Math.floor(feet)) * 12;
+          if (feet > 0 && inches > 0) {
+            document.getElementById("feet").value = Math.floor(feet);
+            document.getElementById("inches").value = Math.round(inches);
+          }
+          document.getElementById("feet").hidden = false;
+          document.getElementById("inches").hidden = false;
+        } else {
+          heightUnit.value = "cm";
+          document.getElementsByClassName("height-units")[0].style.transform =
+            "translateY(0px)";
+          document.getElementsByClassName("height-units")[1].style.transform =
+            "translateY(0px)";
+          let cm = document.getElementById("feet").value * 30.48;
+          cm += document.getElementById("inches").value * 2.54;
+          if (cm > 0) {
+            document.getElementById("height").value = Math.round(cm);
+          }
+          document.getElementById("height").hidden = false;
+          document.getElementById("feet").hidden = true;
+          document.getElementById("inches").hidden = true;
+        }
+      };
+      const setHeight = () => {
+        const feet = document.getElementById("feet").value;
+        const inches = document.getElementById("inches").value;
+        const height = document.getElementById("height");
+        height.value = Math.round(feet * 30.48 + inches * 2.54);
+      };
+    </script>
+  </body>
+</html>

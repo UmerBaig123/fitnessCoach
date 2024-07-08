@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title%}Home{%endblock%}</title>
+    {%load static%}</head
+  ><link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{% static 'home.css' %}" />
+  <body>
+    <div class="topbar">
+      <div class="options"><button class="btn">
+  <span class="hover-underline-animation"> foods </span>
+</button>
+<a href="{% url 'log' %}" class="btn">
+  <span class="hover-underline-animation">log  </span>
+</a>
+
+        
+<button class="btn">
+  <span class="hover-underline-animation"> coaching </span>
+</button>
+        
+<a href="{% url 'profile' %}" class="btn">
+  <span class="hover-underline-animation"> profile </span>
+</a>
+      </button>
+      </div>
+      <div class="profileCont">
+        <img
+          class="profile"
+          width="40"
+          height="40"
+          src="https://img.icons8.com/office/80/person-male.png"
+        />
+      </div>
+    </div>
+    {% block content %} {% endblock %}
+  </body>
+</html>

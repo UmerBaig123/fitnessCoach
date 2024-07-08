@@ -1,0 +1,7 @@
+1- Setup the following pages for the user   --1 day
+    . Log 
+    . Profile
+2- Setup the foods database and add data (500-600 entries)  --1 day
+3- Setup the coaching database  --1/2 a day
+4- make the page for foods and its interaction with log page    --1 day
+5- setup coaching page and all the interactions of coaches and users    --2 days    
