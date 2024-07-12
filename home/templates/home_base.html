@@ -13,20 +13,21 @@
   <link rel="stylesheet" href="{% static 'home.css' %}" />
   <body>
     <div class="topbar">
-      <div class="options"><button class="btn">
-  <span class="hover-underline-animation"> foods </span>
-</button>
-<a href="{% url 'log' %}" class="btn">
-  <span class="hover-underline-animation">log  </span>
+      <div class="options">
+        <a  href="{% url 'food' %}" class="btn" id="foods">
+  <span class="hover-underline-animation" > foods </span>
+        </a>
+<a href="{% url 'log' %}" class="btn" id="log">
+  <span class="hover-underline-animation" >log  </span>
 </a>
 
         
-<button class="btn">
-  <span class="hover-underline-animation"> coaching </span>
+<button class="btn" id="coaching">
+  <span class="hover-underline-animation" > coaching </span>
 </button>
         
-<a href="{% url 'profile' %}" class="btn">
-  <span class="hover-underline-animation"> profile </span>
+<a href="{% url 'profile' %}" class="btn" id="profile">
+  <span class="hover-underline-animation" > profile </span>
 </a>
       </button>
       </div>
