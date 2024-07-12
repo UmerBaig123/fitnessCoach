@@ -1,7 +1,7 @@
-1- Setup the following pages for the user   --1 day
-    . Log 
-    . Profile
-2- Setup the foods database and add data (500-600 entries)  --1 day
-3- Setup the coaching database  --1/2 a day
-4- make the page for foods and its interaction with log page    --1 day
-5- setup coaching page and all the interactions of coaches and users    --2 days    
+1- Make the personal foods model [name,calories,protein,fat,carbs,servingSize, servingUnit] and populate user_food.html (1 day)
+2- Make a log model which contains [date,foreignKey(user)] (1/2 a day)
+3- Make a model log_foods contains [name,calories,protein,fat,carbs,time_added,foreingKey(log)] (1/2 a day)
+4- make a popup to add food to the log (1 day)
+5- Create the backend for the food adding (1/2 a day)
+6- populate log.html (1.5x a day)
+7- Finish everything except coaching (1 day)
