@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import food
+from .models import user_foods
 from login.models import UserStats
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ import os
 load_dotenv()
 @login_required(login_url='/auth/login')
 def HomeView(request):
-    return render(request, 'home.html', {'foods':food.objects.all(),"user":request.user})
+    return render(request, 'home.html', {'foods':user_foods.objects.all(),"user":request.user})
 @login_required(login_url='/auth/login')
 def LogView(request):
     return render(request, 'log.html', {"user":request.user})
@@ -45,6 +45,6 @@ def ProfileView(request):
     goalLevels = ["Lose Weight Fast","Lose Weight Slowly", "Maintain", "Gain Weight Slowly", "Gain Weight Fast"]        
     if UserStats.objects.filter(user=request.user).exists():
         data = UserStats.getUsersObject(request.user)
-        return render(request, 'profile.html', {'foods':food.objects.all(),"user":request.user,"stats":data})
+        return render(request, 'profile.html', {'foods':user_foods.objects.all(),"user":request.user,"stats":data})
     else:
         return redirect('user_stats')
