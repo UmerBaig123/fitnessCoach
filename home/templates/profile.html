@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'profile.css' %}" />
-<div class="paralell">
+<div class="paralell" style="margin-top: 80px">
   <div class="container">
     <div class="name">{{user.username}}</div>
     <div class="paralell">
@@ -67,4 +67,7 @@
     </div>
   </div>
 </div>
+<script>
+  document.getElementById("profile").classList.add("active");
+</script>
 {% endblock %}
