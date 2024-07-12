@@ -1,0 +1,78 @@
+{% extends 'home_base.html' %} {% block title %}Foods{% endblock %}
+<!-- prettier-ignore -->
+{% block content %}
+{% load static %} <link rel="stylesheet" href="{% static 'food.css' %}" />
+<div class="search-container">
+  <div class="options-group">
+    <a
+      class="btn"
+      href="{% url 'user_food' %}"
+      id="user-food"
+      style="padding: 5px 10px"
+    >
+      <span
+        class="hover-underline-animation"
+        style="letter-spacing: 2px; font-size: 10px"
+      >
+        your foods</span
+      >
+    </a>
+    <a
+      href="{% url 'food' %}"
+      class="btn"
+      id="simple-food"
+      style="padding: 5px 10px"
+    >
+      <span
+        class="hover-underline-animation"
+        style="letter-spacing: 2px; font-size: 10px"
+      >
+        foods</span
+      >
+    </a>
+  </div>
+  <form action="javascript:;" onsubmit="redirect()" style="margin-block-end: 0">
+    <div class="group">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="icon"
+        onclick="redirect()"
+        style="cursor: pointer"
+      >
+        <g>
+          <path
+            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+          ></path>
+        </g>
+      </svg>
+      <input
+        class="input"
+        type="search"
+        id="searchQuery"
+        placeholder="Search"
+        autocomplete="off"
+        value="{{ query }}"
+      />
+    </div>
+  </form>
+</div>
+
+<div class="container" id="root">{% block foodcontent %}{% endblock %}</div>
+
+<div class="page-change">
+  <a
+    href="?page={{page|add:-1}}&query={{query}}"
+    id="prevBtn"
+    class="previous round"
+    >&#8249;</a
+  >
+  <a href="?page={{page|add:1}}&query={{query}}" class="next round">&#8250;</a>
+</div>
+<script>
+  document.getElementById("foods").classList.add("active");
+  if (parseInt("{{ page }}") <= 1) {
+    document.querySelector("#prevBtn").style.visibility = "hidden";
+  }
+</script>
+{% endblock %}

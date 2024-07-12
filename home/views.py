@@ -4,14 +4,41 @@ from login.models import UserStats
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from dotenv import load_dotenv
+import os
 # Create your views here.
 
+load_dotenv()
 @login_required(login_url='/auth/login')
 def HomeView(request):
     return render(request, 'home.html', {'foods':food.objects.all(),"user":request.user})
 @login_required(login_url='/auth/login')
 def LogView(request):
     return render(request, 'log.html', {"user":request.user})
+@login_required(login_url='/auth/login')
+def FoodView(request):
+    page = request.GET.get('page', 1)
+    query = request.GET.get('query', None)
+    usda_api_key = os.environ.get("API-KEY")
+    if int(page) < 1:
+        page = 1
+    if query is None or query == "":
+        return render(request, 'food.html', {"user":request.user,"page":page,"search":False,"usda_api_key":usda_api_key})
+    else:
+        return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True,"usda_api_key":usda_api_key})
+@login_required(login_url='/auth/login')
+def UserFoodView(request):
+    page = request.GET.get('page', 1)
+    query = request.GET.get('query', None)
+    if int(page) < 1:
+        page = 1
+    if query is None or query == "":
+        return render(request, 'user_food.html', {"user":request.user,"page":page,"search":False})
+    else:
+        return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True})
+@login_required(login_url='/auth/login')
+def FoodAddView(request, fdcId):
+    return render(request, 'food_add.html', {"user":request.user,"fdcId":fdcId})
 @login_required(login_url='/auth/login')
 def ProfileView(request):
     activityLevels = ["Very Low", "Low", "Moderate", "High", "Very High"]

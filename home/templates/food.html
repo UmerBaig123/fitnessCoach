@@ -1,0 +1,106 @@
+{% extends 'food_base.html' %}
+<!-- prettier-ignore -->
+{% block foodcontent %}
+<div class="animation">
+  <div class="typewriter">
+    <div class="slide"><i></i></div>
+    <div class="paper"></div>
+    <div class="keyboard"></div>
+  </div>
+</div>
+<script>
+  document.getElementById("simple-food").classList.add("active");
+  let responseFoods = [];
+  let PageSize = 12;
+  let flag = false;
+  let APIendpoint = `https://api.nal.usda.gov/fdc/v1/foods/list?api_key={{usda_api_key}}&pageSize=${PageSize}&pageNumber={{page}}&dataType=Branded`;
+  if ("{{ search }}" == "True") {
+    flag = true;
+    APIendpoint = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key={{usda_api_key}}&query={{query}}&pageSize=${PageSize}&pageNumber={{page}}`;
+  }
+  fetch(APIendpoint)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (flag) {
+        responseFoods = data.foods;
+      } else {
+        responseFoods = data;
+      }
+    })
+    .then(() => {
+      let htmlInjection = "";
+      if (responseFoods.length == 0) {
+        htmlInjection = `<div class = 'animation'>No results</div>`;
+      }
+      responseFoods.map((food) => {
+        htmlInjection += `<div class="light-card">
+    <a href='/food/${food.fdcId}' class="light-card-content">
+      <h2 class="light-card-title">${food.description}</h2>
+      <div class = "light-card-portion">
+      per 100g ${
+        flag
+          ? food.foodMeasures.length == 0
+            ? ""
+            : "<div class = 'other-measure'>&ensp;+ more</div>"
+          : ""
+      }</div>
+      <div class="light-card-nutrition">
+        ${
+          flag
+            ? `<div>
+          <span>${food.foodNutrients[3].value} Kcal</span>
+          <small>Calories</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[0].value} G</span>
+          <small>Protein</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[1].value} G</span>
+          <small>Fat</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[2].value} G</span>
+          <small>Carbs</small>
+        </div>`
+            : `
+            <div>
+          <span>${food.foodNutrients[3].amount} Kcal</span>
+          <small>Calories</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[0].amount} G</span>
+          <small>Protein</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[1].amount} G</span>
+          <small>Fat</small>
+        </div>
+        <div>
+          <span>${food.foodNutrients[2].amount} G</span>
+          <small>Carbs</small>
+        </div>`
+        }
+        
+      </div></a>
+    </div>
+  `;
+      });
+      document.getElementById("root").innerHTML = htmlInjection;
+    });
+  const getFirstNotEqual = (arr, value) => {
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]);
+      if (arr[i].disseminationText != value) {
+        return arr[i];
+      }
+    }
+    return -1;
+  };
+  const redirect = () => {
+    let query = document.getElementById("searchQuery").value;
+    window.location.href = `?page=1&query=${query}`;
+  };
+</script>
+{% endblock %}
