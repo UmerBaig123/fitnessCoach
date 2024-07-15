@@ -23,8 +23,7 @@ urlpatterns = [
     path('profile/', views.ProfileView, name='profile'),
     path('log/', views.LogView, name='log'),
     path('food/predefined/', views.FoodView, name='food'),
-    path('food/predefined/<str:fdcId>', views.FoodAddView, name='food_add'),
     path('food/userdefined/', views.UserFoodView, name='user_food'),
-    path('food/userdefined/<str:fdcId>', views.FoodAddView, name='user_food_add'),
+    path('deletefood/', views.deleteUserFood.as_view()),
     path('UserStats/', UserStatsView, name='user_stats_home'),
 ]

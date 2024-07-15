@@ -35,10 +35,7 @@ def UserFoodView(request):
     if query is None or query == "":
         return render(request, 'user_food.html', {"user":request.user,"page":page,"search":False})
     else:
-        return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True})
-@login_required(login_url='/auth/login')
-def FoodAddView(request, fdcId):
-    return render(request, 'food_add.html', {"user":request.user,"fdcId":fdcId})
+        return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True,"foods":foods})
 @login_required(login_url='/auth/login')
 def ProfileView(request):
     activityLevels = ["Very Low", "Low", "Moderate", "High", "Very High"]
