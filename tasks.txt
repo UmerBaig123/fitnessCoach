@@ -1,5 +1,3 @@
-1-populate user_food.html (1 day)
-2- make a popup to add food to the log (1 day)
-3- Create the backend for the food adding (1/2 a day)
-4- populate log.html (1.5x a day)
-5- Finish everything except coaching (1 day)
+1- deal with food addition into the log (1 day)
+2- populate log.html (1/2 a day)
+3- Finish everything except coaching (1 day)
