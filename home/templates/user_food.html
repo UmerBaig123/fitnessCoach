@@ -1,8 +1,231 @@
 {% extends 'food_base.html' %}
 <!-- prettier-ignore -->
 {% block foodcontent %}
-user foods
+<!-- food content -->
+<style>
+  .container {
+    justify-content: flex-start;
+  }
+</style>
+{% if foods %} {% for food in foods %}
+<div class="light-card" id="{{food.pk}}" onclick="deleteFood('{{food.pk}}')">
+  <div class="light-card-content">
+    <div
+      class="paralell"
+      style="justify-content: space-between; margin: 0; padding: 0; width: 99%"
+    >
+      <div></div>
+      <h2 class="light-card-title">{{food.name}}</h2>
+      <div class="delete">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          fill="#a31f15"
+          class="bi bi-trash-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="light-card-portion">
+      per {{food.portion}} {{food.portion_unit}}
+    </div>
+    <div class="light-card-nutrition">
+      <div>
+        <span>{{food.calories}} Kcal</span>
+        <small>Calories</small>
+      </div>
+      <div>
+        <span>{{food.protein}} G</span>
+        <small>Protein</small>
+      </div>
+      <div>
+        <span>{{food.fat}} G</span>
+        <small>Fat</small>
+      </div>
+      <div>
+        <span>{{food.carbs}} G</span>
+        <small>Carbs</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endif %}
+
+<div class="add-container" onclick="show(food_add_form)">
+  <div class="add-circle">+</div>
+</div>
+<!-- form -->
+<form
+  action="{% url 'user_food' %}"
+  onsubmit="disableEmptyInputs(this)"
+  method="post"
+  id="food_add_form"
+  hidden
+>
+  {% csrf_token %}
+  <div class="modal">
+    <div class="close" onclick="hide(food_add_form)">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="26"
+        height="26"
+        fill="#ffffff"
+        class="bi bi-x"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+        />
+      </svg>
+    </div>
+    <div class="modal-title">Add Food</div>
+
+    <div class="paralell">
+      <div class="modal-input-group">
+        <label class="modal-label">name &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="text"
+          name="name"
+          id="name"
+          class="modal-input"
+          style="width: 220px"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label">Portion Size &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="number"
+          name="portion"
+          id="portion"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label">Portion Unit &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="text"
+          placeholder="cup, etc."
+          name="portion_unit"
+          id="portion_unit"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+    </div>
+    <div class="paralell">
+      <div class="modal-input-group">
+        <label class="modal-label">Calories (kcal) &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="number"
+          name="calories"
+          id="calories"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label">Protein (g) &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="number"
+          name="protein"
+          id="protein"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label">Carbs (g) &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="number"
+          name="carbs"
+          id="carbs"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label">Fat (g) &ensp;&ensp;&ensp;</label>
+        <input
+          value=""
+          autocomplete="off"
+          type="number"
+          name="fat"
+          id="fat"
+          class="modal-input"
+          required
+          aria-required="true"
+        />
+        <div></div>
+      </div>
+    </div>
+
+    <div class="submit">
+      <button class="modal-btn" type="submit" value="submit">
+        Add&ensp;&ensp;+
+      </button>
+    </div>
+  </div>
+</form>
 <script>
+  // console.log("{{ foods }}");
+  const deleteFood = (id) => {
+    fetch(`/deletefood/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+      body: JSON.stringify({ id: id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+        // document.getElementById(id).remove();
+      });
+  };
   document.getElementById("user-food").classList.add("active");
+  const hide = (id) => {
+    id.hidden = true;
+  };
+  const show = (id) => {
+    id.hidden = false;
+  };
+  function disableEmptyInputs(form) {
+    var controls = form.elements;
+    for (var i = 0, iLen = controls.length; i < iLen; i++) {
+      controls[i].disabled = controls[i].value == "";
+    }
+  }
 </script>
 {% endblock %}
