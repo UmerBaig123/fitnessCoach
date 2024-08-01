@@ -8,7 +8,11 @@
   }
 </style>
 {% if foods %} {% for food in foods %}
-<div class="light-card" id="{{food.pk}}" onclick="deleteFood('{{food.pk}}')">
+<a
+  class="light-card"
+  id="{{food.pk}}"
+  href="/food/add?name={{food.name}}&calories={{food.calories}}&protein={{food.protein}}&fat={{food.fat}}&carbs={{food.carbs}}&portion={{food.portion}}&unit={{food.portion_unit}}"
+>
   <div class="light-card-content">
     <div
       class="paralell"
@@ -16,7 +20,7 @@
     >
       <div></div>
       <h2 class="light-card-title">{{food.name}}</h2>
-      <div class="delete">
+      <div class="delete" onclick="deleteFood('{{food.pk}}')">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -53,7 +57,7 @@
       </div>
     </div>
   </div>
-</div>
+</a>
 {% endfor %} {% endif %}
 
 <div class="add-container" onclick="show(food_add_form)">
@@ -198,6 +202,8 @@
   </div>
 </form>
 <script>
+  console.log(document);
+  console.log(document.getElementsByClassName("next"));
   // console.log("{{ foods }}");
   const deleteFood = (id) => {
     fetch(`/deletefood/`, {
@@ -211,7 +217,7 @@
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
-        // document.getElementById(id).remove();
+        document.getElementById(id).remove();
       });
   };
   document.getElementById("user-food").classList.add("active");

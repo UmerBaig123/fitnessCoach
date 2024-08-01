@@ -34,55 +34,39 @@
         htmlInjection = `<div class = 'animation'>No results</div>`;
       }
       responseFoods.map((food) => {
-        htmlInjection += `<div class="light-card">
-    <a href="/food/predefined/${food.fdcId}" class="light-card-content">
-      <h2 class="light-card-title">${food.description}</h2>
-      <div class = "light-card-portion">
-      per 100g ${
-        flag
-          ? food.foodMeasures.length == 0
-            ? ""
-            : "<div class = 'other-measure'>&ensp;+ more</div>"
-          : ""
-      }</div>
-      <div class="light-card-nutrition">
-        ${
-          flag
-            ? `<div>
-          <span>${food.foodNutrients[3].value} Kcal</span>
-          <small>Calories</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[0].value} G</span>
-          <small>Protein</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[1].value} G</span>
-          <small>Fat</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[2].value} G</span>
-          <small>Carbs</small>
-        </div>`
-            : `
-            <div>
-          <span>${food.foodNutrients[3].amount} Kcal</span>
-          <small>Calories</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[0].amount} G</span>
-          <small>Protein</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[1].amount} G</span>
-          <small>Fat</small>
-        </div>
-        <div>
-          <span>${food.foodNutrients[2].amount} G</span>
-          <small>Carbs</small>
-        </div>`
+        if (flag) {
+          var cals = food.foodNutrients[3].value;
+          var protein = food.foodNutrients[0].value;
+          var fat = food.foodNutrients[1].value;
+          var carbs = food.foodNutrients[2].value;
+        } else {
+          var cals = food.foodNutrients[3].amount;
+          var protein = food.foodNutrients[0].amount;
+          var fat = food.foodNutrients[1].amount;
+          var carbs = food.foodNutrients[2].amount;
         }
-        
+        var name = food.description.replaceAll("&", "and");
+        htmlInjection += `<div class="light-card">
+    <a href="/food/add?name=${name}&calories=${cals}&protein=${protein}&fat=${fat}&carbs=${carbs}" class="light-card-content">
+      <h2 class="light-card-title">${name}</h2>
+      <div class = "light-card-portion">
+      per 100g</div>
+      <div class="light-card-nutrition"><div>
+          <span>${cals} Kcal</span>
+          <small>Calories</small>
+        </div>
+        <div>
+          <span>${protein} G</span>
+          <small>Protein</small>
+        </div>
+        <div>
+          <span>${fat} G</span>
+          <small>Fat</small>
+        </div>
+        <div>
+          <span>${carbs} G</span>
+          <small>Carbs</small>
+        </div>
       </div></a>
     </div>
   `;

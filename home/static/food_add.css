@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+#name {
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+.serving {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 15px;
+}
+.nutrient {
+  display: flex;
+  align-items: center;
+}
+.nutrient-name {
+  font-size: 17px;
+  font-weight: 900;
+  margin: 10px 0;
+  text-transform: uppercase;
+}
+.nutrient-name::after {
+  content: ":";
+  margin-right: 10px;
+}
+.comparisons {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.137);
+  height: fit-content;
+}
+.comp-heading {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  background-color: #069910;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.comp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.137);
+}
+.comp-gif {
+  opacity: 0.5;
+}
+.comp div {
+  margin: 0 10px;
+}
+.rem-heading {
+  font-size: 20px;
+}
+.rem-heading::after {
+  content: ":";
+  margin: 5px;
+}
+#remarks {
+  font-size: 14px;
+  text-align: justify;
+  margin: 10px;
+}
+#portion {
+  font-size: 14px;
+  text-align: justify;
+  margin: 10px;
+  border-radius: 10px;
+  width: 70px;
+  padding: 10px;
+  border: 1px solid #0000005e;
+}
+.submitBtn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+  border: 1px solid #0000005e;
+  cursor: pointer;
+  background-color: #069910;
+  color: white;
+}
+.submitBtn:hover {
+  background-color: #069910be;
+}
+[hidden] {
+  display: none;
+}

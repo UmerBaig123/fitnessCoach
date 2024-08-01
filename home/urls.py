@@ -19,10 +19,11 @@ from django.urls import path,include
 from login.views import UserStatsView
 from . import views
 urlpatterns = [
-    path('', views.HomeView, name='home'),
+    path('', views.ProfileView, name='home'),
     path('profile/', views.ProfileView, name='profile'),
     path('log/', views.LogView, name='log'),
     path('food/predefined/', views.FoodView, name='food'),
+    path('food/add/', views.FoodAddView, name='add_food'),
     path('food/userdefined/', views.UserFoodView, name='user_food'),
     path('deletefood/', views.deleteUserFood.as_view()),
     path('UserStats/', UserStatsView, name='user_stats_home'),

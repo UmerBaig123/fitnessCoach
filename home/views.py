@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import user_foods
+from .models import user_foods,log_foods,log
 from login.models import UserStats
-from django.views.generic import TemplateView
+from login.models import UserStats
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from dotenv import load_dotenv
 from django.views.decorators.csrf import csrf_exempt
 import os
+from datetime import date
 # Create your views here.
 
 load_dotenv()
@@ -63,14 +64,41 @@ def ProfileView(request):
         return render(request, 'profile.html', {'foods':user_foods.objects.all(),"user":request.user,"stats":data})
     else:
         return redirect('user_stats')
-class deleteUserFood(APIView):
-    @csrf_exempt
+@login_required(login_url='/auth/login')
+def FoodAddView(request):
+    if not log.objects.filter(user=request.user,date=date.today()).exists():
+        log_obj = log(user=request.user)
+        log_obj.save()
+    todaysLog = log.objects.get(user=request.user,date=date.today())
+    if request.method == "POST":
+        if not request.POST.get('name') or not request.POST.get('calories') or not request.POST.get('fat') or not request.POST.get('protein') or not request.POST.get('carbs'):
+            return redirect('add_food')
+        serving_unit = request.POST.get('serving_unit')
+        name = request.POST.get('name')
+        serving = request.POST.get('serving')
+        calories = request.POST.get('calories')
+        fat = request.POST.get('fat')
+        protein = request.POST.get('protein')
+        carbs = request.POST.get('carbs')
+        user_food = log_foods(name=name,calories=calories,fat=fat,protein=protein,carbs=carbs,portion=serving,portion_unit=serving_unit,log=todaysLog)
+        user_food.save()
+        return redirect ('log')
+    foodName = request.GET.get('name', None)
+    foodCalories = request.GET.get('calories', None)
+    foodFat = request.GET.get('fat', None)
+    foodProtein = request.GET.get('protein', None)
+    foodCarbs = request.GET.get('carbs', None)
+    unit = request.GET.get('unit', 'g')
+    portion = request.GET.get('portion', 100)
+    weight = UserStats.getUsersObject(request.user).weight
+    context = {"user":request.user,"name":foodName,"calories":foodCalories,"fat":foodFat,"protein":foodProtein,"carbs":foodCarbs,"weight":weight,"unit":unit,"portion":portion}
+    return render(request, 'food_add.html', context)
+class deleteUserFood(APIView): 
     def get(self,request):
         # user_food = user_foods.objects.get(id=request.data.get('id'))
         # user_food.delete()
-        return Response({"message":"hello man how are you"})
-    @csrf_exempt    
+        return Response({"message":"hello man how are you"})   
     def post(self, request):
         user_food = user_foods.objects.get(id=request.data.get('id'))
         user_food.delete()
-        return Response({"message":request.data.get('id')})
+        return Response({"message":request.user.username})

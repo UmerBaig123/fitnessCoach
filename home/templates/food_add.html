@@ -1,0 +1,244 @@
+{% extends 'home_base.html' %}
+<!-- prettier-ignore -->
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'food_add.css' %}" />
+<form action="{% url 'add_food' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="name" id="inp_name" value="{{name}}" hidden />
+  <input
+    type="text"
+    name="serving_unit"
+    id="inp_name"
+    value="{{unit}}"
+    hidden
+  />
+  <input
+    type="number"
+    name="serving"
+    id="inp_serving"
+    value="{{portion}}"
+    hidden
+  />
+  <input
+    type="number"
+    name="calories"
+    id="inp_calories"
+    value="{{calories}}"
+    hidden
+  />
+  <input
+    type="number"
+    name="protein"
+    id="inp_protein"
+    value="{{protein}}"
+    hidden
+  />
+  <input type="number" name="fat" id="inp_fat" value="{{fat}}" hidden />
+  <input type="number" name="carbs" id="inp_carbs" value="{{carbs}}" hidden />
+  <div class="container">
+    <div style="max-width: 50%">
+      <div id="name">{{name}}</div>
+      <div class="serving" id="serving">per {{portion}}{{unit}}</div>
+      <div class="nutrients">
+        <div class="nutrient">
+          <div class="nutrient-name">Calories</div>
+          <div class="nutrient-value" id="cals">{{calories}} Kcal</div>
+        </div>
+        <div class="nutrient">
+          <div class="nutrient-name">Protein</div>
+          <div class="nutrient-value" id="protein">{{protein}} G</div>
+        </div>
+        <div class="nutrient">
+          <div class="nutrient-name">Fat</div>
+          <div class="nutrient-value" id="fat">{{fat}} G</div>
+        </div>
+        <div class="nutrient">
+          <div class="nutrient-name">Carbs</div>
+          <div class="nutrient-value" id="carbs">{{carbs}} G</div>
+        </div>
+      </div>
+    </div>
+    <div class="comparisons">
+      <div class="comp-heading">These calories are equivalent to</div>
+      <div class="comp">
+        <div class="comp-gif">
+          <img
+            src="{% static 'media/walking.gif' %}"
+            width="30px"
+            height="30px"
+            alt=""
+          />
+        </div>
+        <div class="comp-value" id="walking"></div>
+      </div>
+      <div class="comp">
+        <div class="comp-gif">
+          <img
+            src="{% static 'media/running.gif' %}"
+            width="30px"
+            height="30px"
+            alt=""
+          />
+        </div>
+        <div class="comp-value" id="running"></div>
+      </div>
+      <div class="comp">
+        <div class="comp-gif">
+          <img
+            src="{% static 'media/lifting.gif' %}"
+            width="30px"
+            height="30px"
+            alt=""
+          />
+        </div>
+        <div class="comp-value" id="lifting"></div>
+      </div>
+      <div class="comp">
+        <div class="comp-gif">
+          <img
+            src="{% static 'media/apple.png' %}"
+            width="30px"
+            height="30px"
+            alt=""
+          />
+        </div>
+        <div class="comp-value" id="apple"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="flex-direction: column; margin-top: 50px">
+    <div class="rem-heading">REMARKS</div>
+    <div id="remarks"></div>
+    <div>
+      <input
+        type="number"
+        name=""
+        id="portion"
+        value="{{portion}}"
+        min="0"
+        onchange="multiplyAll(this)"
+      />
+      {{unit}}
+    </div>
+    <div
+      style="
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+      "
+    >
+      <button type="submit" class="submitBtn">Add</button>
+    </div>
+  </div>
+</form>
+<script>
+  var portionSize = parseFloat("{{portion}}");
+  var weight = "{{weight}}";
+  var calories = parseFloat("{{calories}}");
+  var protein = parseFloat("{{protein}}");
+  var fat = parseFloat("{{fat}}");
+  var carbs = parseFloat("{{carbs}}");
+  weight = parseFloat(weight);
+  var walk = 0.0668 * weight;
+  var Run = 0.167 * weight;
+  var Lift = 0.1169 * weight;
+  var AppleCalories = 95;
+  apple.innerHTML = (calories / AppleCalories).toFixed(2) + " apples";
+  walking.innerHTML = (calories / walk).toFixed(2) + " minutes";
+  running.innerHTML = (calories / Run).toFixed(2) + " minutes";
+  lifting.innerHTML = (calories / Lift).toFixed(2) + " minutes";
+  addRemarks();
+  function addRemarks() {
+    var remarks = document.getElementById("remarks");
+    if (protein > 8 && fat > 10 && fat < 30 && carb > 50) {
+      remarks.innerHTML = "Great choice, perfectly balanced";
+      remarks.style.color = "#00db3a";
+      return;
+    }
+    if (protein > 15) {
+      remarks.innerHTML =
+        "High protein content great for losing fat and gaining muscle";
+
+      remarks.style.color = "#00db3a";
+      return;
+    }
+    if (carbs > 50 && protein < 15 && fat > 20) {
+      remarks.innerHTML =
+        "Hight carb content, consider adding lean protein like chicken or fish";
+      remarks.style.color = "#a6ab1a";
+      return;
+    }
+    if (carbs > 50 && protein < 15 && fat < 20) {
+      remarks.innerHTML =
+        "Hight carb content, consider adding protein like chicken or beef";
+      remarks.style.color = "#89ab1a";
+      return;
+    }
+    if (fat > 30) {
+      remarks.innerHTML =
+        "High fat content, consider adding lean protein like chicken or fish";
+      remarks.style.color = "#c42206";
+      return;
+    }
+    if (fat < 10) {
+      remarks.innerHTML =
+        "Low fat content, consider adding healthy fats like nuts or seeds";
+      remarks.style.color = "#89ab1a";
+      return;
+    }
+    if (carbs < 50) {
+      remarks.innerHTML =
+        "Low carb content, consider adding healthy carbs like fruits or whole grains";
+      remarks.style.color = "#89ab1a";
+      return;
+    }
+    if (protein < 8) {
+      remarks.innerHTML =
+        "Low protein content, consider adding protein like chicken or beef";
+      remarks.style.color = "#c42206";
+      return;
+    }
+  }
+  function multiplyAll(e) {
+    var portion = e.value;
+    document.getElementById("cals").innerHTML =
+      ((calories * portion) / portionSize).toFixed() + " KCal";
+    document.getElementById("protein").innerHTML =
+      ((protein * portion) / portionSize).toFixed() + " G";
+    document.getElementById("fat").innerHTML =
+      ((fat * portion) / portionSize).toFixed() + " G";
+    document.getElementById("carbs").innerHTML =
+      ((carbs * portion) / portionSize).toFixed() + " G";
+    document.getElementById("serving").innerHTML = `per ${portion}g`;
+    document.getElementById("walking").innerHTML =
+      ((calories * portion) / portionSize / walk).toFixed(2) + " minutes";
+    document.getElementById("running").innerHTML =
+      ((calories * portion) / portionSize / Run).toFixed(2) + " minutes";
+    document.getElementById("lifting").innerHTML =
+      ((calories * portion) / portionSize / Lift).toFixed(2) + " minutes";
+    document.getElementById("apple").innerHTML =
+      ((calories * portion) / portionSize / AppleCalories).toFixed(2) +
+      " apples";
+    document.getElementById("inp_serving").value = portion;
+    document.getElementById("inp_calories").value = (
+      (calories * portion) /
+      portionSize
+    ).toFixed();
+    document.getElementById("inp_protein").value = (
+      (protein * portion) /
+      portionSize
+    ).toFixed();
+    document.getElementById("inp_fat").value = (
+      (fat * portion) /
+      portionSize
+    ).toFixed();
+    document.getElementById("inp_carbs").value = (
+      (carbs * portion) /
+      portionSize
+    ).toFixed();
+  }
+</script>
+{% endblock %}
