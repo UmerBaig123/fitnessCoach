@@ -469,11 +469,6 @@ small {
   gap: 200px;
   margin-bottom: 20px;
 }
-a {
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 16px;
-}
 
 .previous:hover {
   background-color: #ddd;

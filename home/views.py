@@ -16,11 +16,20 @@ load_dotenv()
 @login_required(login_url='/auth/login')
 def HomeView(request):
     return render(request, 'home.html', {'foods':user_foods.objects.all(),"user":request.user})
+
 @login_required(login_url='/auth/login')
 def LogView(request):
+    if not log.objects.filter(user=request.user,date=date.today()).exists():
+        log_obj = log(user=request.user)
+        log_obj.save()
+    todaysLog = log.objects.get(user=request.user,date=date.today())
     return render(request, 'log.html', {"user":request.user})
 @login_required(login_url='/auth/login')
 def FoodView(request):
+    if not log.objects.filter(user=request.user,date=date.today()).exists():
+        log_obj = log(user=request.user)
+        log_obj.save()
+    todaysLog = log.objects.get(user=request.user,date=date.today())
     page = request.GET.get('page', 1)
     query = request.GET.get('query', None)
     usda_api_key = os.environ.get("API-KEY")
@@ -32,6 +41,10 @@ def FoodView(request):
         return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True,"usda_api_key":usda_api_key})
 @login_required(login_url='/auth/login')
 def UserFoodView(request):
+    if not log.objects.filter(user=request.user,date=date.today()).exists():
+        log_obj = log(user=request.user)
+        log_obj.save()
+    todaysLog = log.objects.get(user=request.user,date=date.today())
     if request.method == "POST":
         if not request.POST.get('name') or not request.POST.get('calories') or not request.POST.get('fat') or not request.POST.get('protein') or not request.POST.get('carbs') or not request.POST.get('portion') or not request.POST.get('portion_unit'):
             return redirect('user_food')
@@ -57,6 +70,10 @@ def UserFoodView(request):
         return render(request, 'food.html', {"query":query,"page":page,"user":request.user,"search":True,"foods":foods})
 @login_required(login_url='/auth/login')
 def ProfileView(request):
+    if not log.objects.filter(user=request.user,date=date.today()).exists():
+        log_obj = log(user=request.user)
+        log_obj.save()
+    todaysLog = log.objects.get(user=request.user,date=date.today())
     activityLevels = ["Very Low", "Low", "Moderate", "High", "Very High"]
     goalLevels = ["Lose Weight Fast","Lose Weight Slowly", "Maintain", "Gain Weight Slowly", "Gain Weight Fast"]        
     if UserStats.objects.filter(user=request.user).exists():

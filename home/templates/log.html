@@ -1,3 +1,10 @@
 {% extends 'home_base.html' %}{% block title %}Home{% endblock %}
 <!-- prettier-ignore -->
-{% block content %} log  {% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'log.css' %}" />
+<div class="container">log</div>
+<script>
+  log.classList.add("active");
+</script>
+{% endblock %}
