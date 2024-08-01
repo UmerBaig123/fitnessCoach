@@ -4,3 +4,5 @@ from . import models
 # class homeAdmin(admin.ModelAdmin):
 #     list_display = ['food_name', 'food_description', 'food_calories', 'food_fat', 'food_protein', 'food_carbs']
 admin.site.register(models.user_foods) 
+admin.site.register(models.log) 
+admin.site.register(models.log_foods)  
